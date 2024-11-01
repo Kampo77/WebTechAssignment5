@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clock</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #1d2671, #c33764);
+        color: #333;
+      }
+
+      .clock {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+
+      .clock-number {
+        font-size: 36px;
+        font-weight: bold;
+        color: #333;
+        transition: transform 0.5s ease;
+      }
+
+      .separator {
+        font-size: 36px;
+        color: #333;
+        margin: 0 5px;
+      }
+
+      .time-wrapper {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock">
+      <div class="time-wrapper">
+        <div id="hour" class="clock-number">23</div>
+        <div class="separator">:</div>
+        <div id="minute" class="clock-number">59</div>
+        <div class="separator">:</div>
+        <div id="second" class="clock-number">59</div>
+      </div>
+    </div>
+
+    <script>
+      let rotation = 0;
+      const hour = document.getElementById("hour");
+      const minute = document.getElementById("minute");
+      const second = document.getElementById("second");
+
+      setInterval(() => {
+          const date = new Date();
+          const h = date.getHours();
+          const m = date.getMinutes();
+          const s = date.getSeconds();
+          
+          updateClock(hour.innerHTML, minute.innerHTML, second.innerHTML, h, m, s);
+          hour.innerText = h < 10 ? "0" + h : h;
+          minute.innerText = m < 10 ? "0" + m : m;
+          second.innerText = s < 10 ? "0" + s : s;
+          rotation += 360;
+      }, 1000);
+
+      function updateClock(old_h, old_m, old_s, new_h, new_m, new_s) {
+          if (old_h != new_h) 
+              hour.style.transform = `rotate(${rotation}deg)`;
+          if (old_m != new_m) 
+              minute.style.transform = `rotate(${rotation}deg)`;
+          if (old_s != new_s)
+              second.style.transform = `rotate(${rotation}deg)`;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        #result {
+            font-size: 1.7em;
+            color: #4CAF50;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        button {
+            font-size: 1em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Rock Paper Scissors</h1>
+        <h2>Player: <span id="player"></span></h2>
+        <h2>Computer: <span id="computer"></span></h2>
+        <h2>Result: <span id="result"></span></h2>
+        <button onclick="rock()">Rock</button>
+        <button onclick="paper()">Paper</button>
+        <button onclick="scissors()">Scissors</button>
+    </div>
+
+    <script>
+        function rock() {
+            play("rock");
+        }
+
+        function paper() {
+            play("paper");
+        }
+
+        function scissors() {
+            play("scissors");
+        }
+
+        function play(playerChoice) {
+            const choices = ["rock", "paper", "scissors"];
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+            document.getElementById("player").innerText = capitalize(playerChoice);
+            document.getElementById("computer").innerText = capitalize(computerChoice);
+            const result = checkWins(playerChoice, computerChoice);
+            document.getElementById("result").innerText = result === 0 ? "Draw" : result === 1 ? "Player Wins" : "Computer Wins";
+        }
+
+        function checkWins(choice1, choice2) {
+            if (choice1 === choice2) 
+                return 0;
+            
+            if (choice1 === "rock") 
+                return choice2 === "scissors" ? 1 : -1;
+
+            if (choice1 === "paper") 
+                return choice2 === "rock" ? 1 : -1;
+                
+            if (choice1 === "scissors") 
+                return choice2 === "paper" ? 1 : -1;  
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+    </script>
+</body>
+</html>

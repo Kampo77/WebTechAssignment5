@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .containers {
+        width: 30%;
+        height: 60%;
+        background-color: #333;
+      }
+
+      .containers.dragging {
+        border: 2px dashed #f03164;
+        background-color: #777;
+      }
+
+      .containers .element {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10%;
+        color: #fff;
+        font-size: 20px;
+        background-color: #f03164;
+        margin: 30px;
+      }
+      .dragging {
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="containers">
+        <div class="element" draggable="true">List Item 1</div>
+        <div class="element" draggable="true">List Item 2</div>
+      </div>
+      <div class="containers">
+        <div class="element" draggable="true">List Item 3</div>
+        <div class="element" draggable="true">List Item 4</div>
+      </div>
+    </div>
+
+    <script>
+      function handleElements() {
+        let draggedElement = null;
+
+        const elements = document.querySelectorAll(".element");
+        elements.forEach((element) => {
+          element.addEventListener("dragstart", (event) => {
+            event.target.classList.add("dragging");
+            draggedElement = event.target;
+          });
+          element.addEventListener("dragend", (event) => {
+            event.target.classList.remove("dragging");
+          });
+        });
+
+        const containers = document.querySelectorAll(".containers");
+        containers.forEach((container) => {
+            container.addEventListener("dragover", (event) => {
+                event.preventDefault();
+            });
+
+            container.addEventListener("dragenter", (event) => {
+                event.target.classList.add("dragging");
+            });
+
+            container.addEventListener("dragleave", (event) => {
+                event.target.classList.remove("dragging");
+            });
+
+            container.addEventListener("drop", (event) => {
+                event.target.classList.remove("dragging");
+                container.appendChild(draggedElement);
+            });
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        handleElements();
+      });
+    </script>
+  </body>
+</html>
